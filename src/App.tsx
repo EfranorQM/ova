@@ -4,9 +4,10 @@ import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 // Importar los componentes de cada rol
-import AdminPanel from "./pages/Admin"; // Suponiendo que Admin.tsx existe en pages
-import DocentePanel from "./pages/Docente"; // Suponiendo que Docente.tsx existe en pages
-import EstudiantePanel from "./pages/Estudiante"; // Importa el componente Estudiante
+import AdminPanel from "./pages/Admin";
+import DocentePanel from "./pages/Docente";
+import EstudiantePanel from "./pages/Estudiante";
+import Modulos from "./pages/Modulos";
 
 function App() {
   return (
@@ -41,6 +42,16 @@ function App() {
           element={
             <ProtectedRoute allowedType={[3]}>
               <EstudiantePanel />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Ruta protegida para la página de Módulos del Estudiante */}
+        <Route
+          path="/estudiante/modulos/:id"
+          element={
+            <ProtectedRoute allowedType={[3]}>
+              <Modulos />
             </ProtectedRoute>
           }
         />

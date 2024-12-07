@@ -9,25 +9,6 @@ const roleIcons: { [key: number]: string } = {
   3: "🎓", // Estudiante
 };
 
-// Botones según el rol
-const roleButtons: { [key: number]: { label: string; path: string }[] } = {
-  1: [
-    { label: "Inicio", path: "/admin" },
-    { label: "Módulos", path: "/modulos" },
-    { label: "Lecciones", path: "/lecciones" },
-    { label: "Registrar", path: "/registrar" },
-  ],
-  2: [
-    { label: "Inicio", path: "/inicio" },
-    { label: "Estudiantes", path: "/estudiantes" },
-    { label: "Resultados", path: "/resultados" },
-  ],
-  3: [
-    { label: "Inicio", path: "/inicio" },
-    { label: "Módulos", path: "/modulos" },
-  ],
-};
-
 interface HeaderProps {
   userName: string; // Nombre del usuario
   userRole: number; // Rol del usuario
@@ -43,40 +24,42 @@ const Header: React.FC<HeaderProps> = ({ userName, userRole }) => {
   };
 
   return (
-    <header className="bg-indigo-600 text-white shadow-lg py-4">
-      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
-        {/* Logo y título */}
-        <div className="flex items-center space-x-4">
+    <header className="bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 text-white shadow-md">
+      <div className="container mx-auto flex flex-col md:flex-row items-center justify-between py-4 px-6">
+        {/* Título alineado a la izquierda */}
+        <h1 className="text-2xl font-bold tracking-wide text-left flex-1">
+          OVA de Ondas y Partículas
+        </h1>
+
+        {/* Logo centrado con animación */}
+        <div className="flex justify-center w-full md:w-auto mt-4 md:mt-0">
           <img
             src={logo}
             alt="Logo OVA"
-            className="w-12 h-12 rounded-full shadow-md border-2 border-white"
+            className="w-20 h-20 rounded-full shadow-lg border-2 border-white transform transition-transform duration-300 hover:scale-110"
           />
-          <h1 className="text-2xl font-bold tracking-wide">
-            OVA de Ondas y Partículas
-          </h1>
         </div>
 
-        {/* Navegación según el rol */}
-        <nav className="mt-4 md:mt-0 flex space-x-4">
-          {roleButtons[userRole]?.map((button, index) => (
-            <button
-              key={index}
-              onClick={() => navigate(button.path)}
-              className="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg shadow-md transition"
-            >
-              {button.label}
-            </button>
-          ))}
-        </nav>
+        {/* Información del usuario */}
+        <div className="flex items-center space-x-4 mt-4 md:mt-0 flex-1 justify-end">
+          <div className="flex items-center space-x-3">
+            <span className="text-3xl">{roleIcons[userRole]}</span>
+            <div className="text-right">
+              <p className="text-lg font-semibold">{userName}</p>
+              <p className="text-sm text-indigo-200">
+                {userRole === 1
+                  ? "Administrador"
+                  : userRole === 2
+                  ? "Docente"
+                  : "Estudiante"}
+              </p>
+            </div>
+          </div>
 
-        {/* Información del usuario y botón de cerrar sesión */}
-        <div className="flex items-center space-x-3 mt-4 md:mt-0">
-          <span className="text-2xl">{roleIcons[userRole]}</span>
-          <span className="text-lg font-semibold">{userName}</span>
+          {/* Botón de cerrar sesión */}
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg shadow-md transition"
+            className="px-6 py-2 bg-red-500 text-white rounded-full shadow-lg hover:bg-red-600 hover:shadow-xl transition duration-300 ease-in-out"
           >
             Cerrar Sesión
           </button>
